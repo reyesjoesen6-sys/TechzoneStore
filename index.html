@@ -1,1 +1,976 @@
+<!DOCTYPE html>
+<html lang="en">
 
+<head>
+
+<meta charset="UTF-8">
+
+<meta
+name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>TechZone Store</title>
+
+<link
+rel="stylesheet"
+href="style.css">
+
+<link
+rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+</head>
+
+
+<body>
+
+
+<!-- LOGIN -->
+
+<div id="loginPage" class="login-page">
+
+<div class="login-card">
+
+<div class="logo">
+<i class="fa-solid fa-microchip"></i>
+</div>
+
+<h1>TechZone Store</h1>
+
+<p>Inventory Management System</p>
+
+
+<form id="loginForm">
+
+
+<div class="input-group">
+
+<label>Username</label>
+
+<div class="input-wrapper">
+
+<i class="fa-solid fa-user"></i>
+
+<input
+type="text"
+id="username"
+placeholder="Enter username"
+required>
+
+</div>
+
+</div>
+
+
+<div class="input-group">
+
+<label>Password</label>
+
+<div class="input-wrapper">
+
+<i class="fa-solid fa-lock"></i>
+
+<input
+type="password"
+id="password"
+placeholder="Enter password"
+required>
+
+<button
+type="button"
+class="eye-btn"
+onclick="togglePassword()">
+
+<i
+id="eyeIcon"
+class="fa-solid fa-eye">
+</i>
+
+</button>
+
+</div>
+
+</div>
+
+
+<button
+type="submit"
+class="login-btn">
+
+<i class="fa-solid fa-right-to-bracket"></i>
+
+Login
+
+</button>
+
+
+<p id="loginMessage"></p>
+
+</form>
+
+
+
+
+
+
+</div>
+
+</div>
+
+</div>
+
+
+
+<!-- APP -->
+
+<div
+id="app"
+class="app hidden">
+
+
+<aside
+id="sidebar"
+class="sidebar">
+
+
+<div class="brand">
+
+<div class="brand-logo">
+
+<i class="fa-solid fa-microchip"></i>
+
+</div>
+
+<div>
+
+<h2>TechZone Store</h2>
+
+<small>
+Inventory System
+</small>
+
+</div>
+
+</div>
+
+
+<nav>
+
+
+<button
+class="menu active"
+onclick="showPage('dashboardPage',this)">
+
+<i class="fa-solid fa-chart-line"></i>
+
+Dashboard
+
+</button>
+
+
+<button
+class="menu"
+onclick="showPage('inventoryPage',this)">
+
+<i class="fa-solid fa-boxes-stacked"></i>
+
+Inventory
+
+</button>
+
+
+<button
+class="menu"
+onclick="showPage('addProductPage',this)">
+
+<i class="fa-solid fa-plus"></i>
+
+Add Product
+
+</button>
+
+
+</nav>
+
+
+<div class="sidebar-bottom">
+
+
+<div class="user-info">
+
+<div class="avatar">
+
+<i class="fa-solid fa-user"></i>
+
+</div>
+
+
+<div>
+
+<strong id="loggedUser">
+Admin
+</strong>
+
+<small>
+Administrator
+</small>
+
+</div>
+
+</div>
+
+
+<button
+class="logout"
+onclick="logout()">
+
+<i class="fa-solid fa-right-from-bracket"></i>
+
+Logout
+
+</button>
+
+
+</div>
+
+</aside>
+
+
+
+<main class="main">
+
+
+<header class="topbar">
+
+
+<div class="top-left">
+
+<button
+class="mobile-menu"
+onclick="toggleSidebar()">
+
+<i class="fa-solid fa-bars"></i>
+
+</button>
+
+
+<div>
+
+<h2 id="pageTitle">
+Dashboard
+</h2>
+
+<p>
+TechZone Store Inventory Management
+</p>
+
+</div>
+
+</div>
+
+
+<div class="date">
+
+<i class="fa-regular fa-calendar"></i>
+
+<span id="currentDate"></span>
+
+</div>
+
+
+</header>
+
+
+
+<!-- DASHBOARD -->
+
+<section
+id="dashboardPage"
+class="page active-page">
+
+
+<div class="heading">
+
+<div>
+
+<h1>Dashboard</h1>
+
+<p>
+Overview of your inventory.
+</p>
+
+</div>
+
+
+<button
+class="primary"
+onclick="showPageById('addProductPage')">
+
+<i class="fa-solid fa-plus"></i>
+
+Add Product
+
+</button>
+
+</div>
+
+
+<div class="stats">
+
+
+<div class="stat">
+
+<div class="stat-icon blue">
+
+<i class="fa-solid fa-box"></i>
+
+</div>
+
+<div>
+
+<span>Total Products</span>
+
+<strong id="totalProducts">
+0
+</strong>
+
+</div>
+
+</div>
+
+
+<div class="stat">
+
+<div class="stat-icon green">
+
+<i class="fa-solid fa-cubes"></i>
+
+</div>
+
+<div>
+
+<span>Total Stock</span>
+
+<strong id="totalStock">
+0
+</strong>
+
+</div>
+
+</div>
+
+
+<div class="stat">
+
+<div class="stat-icon orange">
+
+<i class="fa-solid fa-triangle-exclamation"></i>
+
+</div>
+
+<div>
+
+<span>Low Stock</span>
+
+<strong id="lowStock">
+0
+</strong>
+
+</div>
+
+</div>
+
+
+<div class="stat">
+
+<div class="stat-icon purple">
+
+<i class="fa-solid fa-peso-sign"></i>
+
+</div>
+
+<div>
+
+<span>Inventory Value</span>
+
+<strong id="inventoryValue">
+₱0.00
+</strong>
+
+</div>
+
+</div>
+
+
+</div>
+
+
+
+<div class="card">
+
+
+<div class="card-header">
+
+<div>
+
+<h2>
+Recent Inventory
+</h2>
+
+<p>
+Latest products in TechZone Store.
+</p>
+
+</div>
+
+
+<button
+class="secondary"
+onclick="showPageById('inventoryPage')">
+
+View All
+
+</button>
+
+</div>
+
+
+<div class="table-wrapper">
+
+<table>
+
+<thead>
+
+<tr>
+
+<th>Product</th>
+
+<th>Category</th>
+
+<th>Price</th>
+
+<th>Stock</th>
+
+<th>Status</th>
+
+</tr>
+
+</thead>
+
+
+<tbody
+id="recentInventoryBody">
+</tbody>
+
+</table>
+
+</div>
+
+</div>
+
+
+</section>
+
+
+
+<!-- INVENTORY -->
+
+<section
+id="inventoryPage"
+class="page">
+
+
+<div class="heading">
+
+<div>
+
+<h1>Inventory</h1>
+
+<p>
+Manage your TechZone products.
+</p>
+
+</div>
+
+
+<button
+class="primary"
+onclick="showPageById('addProductPage')">
+
+<i class="fa-solid fa-plus"></i>
+
+Add Product
+
+</button>
+
+</div>
+
+
+<div class="card">
+
+
+<div class="toolbar">
+
+
+<div class="search">
+
+<i class="fa-solid fa-search"></i>
+
+<input
+type="text"
+id="searchInput"
+placeholder="Search products..."
+oninput="filterInventory()">
+
+</div>
+
+
+<select
+id="categoryFilter"
+onchange="filterInventory()">
+
+<option value="">
+All Categories
+</option>
+
+</select>
+
+
+<select
+id="statusFilter"
+onchange="filterInventory()">
+
+<option value="">
+All Status
+</option>
+
+<option>
+In Stock
+</option>
+
+<option>
+Low Stock
+</option>
+
+<option>
+Out of Stock
+</option>
+
+</select>
+
+
+</div>
+
+
+<div class="table-wrapper">
+
+<table>
+
+<thead>
+
+<tr>
+
+<th>ID</th>
+
+<th>Product</th>
+
+<th>Category</th>
+
+<th>Price</th>
+
+<th>Stock</th>
+
+<th>Reorder</th>
+
+<th>Status</th>
+
+<th>Actions</th>
+
+</tr>
+
+</thead>
+
+
+<tbody
+id="inventoryBody">
+</tbody>
+
+</table>
+
+</div>
+
+</div>
+
+</section>
+
+
+
+<!-- ADD PRODUCT -->
+
+<section
+id="addProductPage"
+class="page">
+
+
+<div class="heading">
+
+<div>
+
+<h1>Add Product</h1>
+
+<p>
+Add a new product to inventory.
+</p>
+
+</div>
+
+</div>
+
+
+<div class="form-card">
+
+
+<form id="productForm">
+
+
+<div class="form-grid">
+
+
+<div class="form-group">
+
+<label>
+Product Name *
+</label>
+
+<input
+type="text"
+id="productName"
+placeholder="Gaming Mouse"
+required>
+
+</div>
+
+
+<div class="form-group">
+
+<label>
+Category *
+</label>
+
+<select
+id="productCategory"
+required>
+
+<option value="">
+Select Category
+</option>
+
+<option>Computer</option>
+<option>Laptop</option>
+<option>Accessories</option>
+<option>Keyboard</option>
+<option>Mouse</option>
+<option>Monitor</option>
+<option>Storage</option>
+<option>Networking</option>
+<option>Other</option>
+
+</select>
+
+</div>
+
+
+<div class="form-group">
+
+<label>Price *</label>
+
+<input
+type="number"
+id="productPrice"
+min="0"
+step="0.01"
+required>
+
+</div>
+
+
+<div class="form-group">
+
+<label>Quantity *</label>
+
+<input
+type="number"
+id="productQuantity"
+min="0"
+required>
+
+</div>
+
+
+<div class="form-group">
+
+<label>Reorder Level *</label>
+
+<input
+type="number"
+id="reorderLevel"
+min="0"
+value="5"
+required>
+
+</div>
+
+
+<div class="form-group">
+
+<label>Supplier</label>
+
+<input
+type="text"
+id="supplier"
+placeholder="Supplier name">
+
+</div>
+
+
+<div class="form-group full">
+
+<label>Description</label>
+
+<textarea
+id="productDescription"
+rows="4"
+placeholder="Product description"></textarea>
+
+</div>
+
+
+</div>
+
+
+<div class="form-actions">
+
+
+<button
+type="button"
+class="secondary"
+onclick="resetProductForm()">
+
+Clear
+
+</button>
+
+
+<button
+type="submit"
+class="primary">
+
+<i class="fa-solid fa-save"></i>
+
+Save Product
+
+</button>
+
+
+</div>
+
+
+</form>
+
+</div>
+
+</section>
+
+
+</main>
+
+</div>
+
+
+
+<!-- EDIT MODAL -->
+
+<div
+id="editModal"
+class="modal">
+
+
+<div class="modal-content">
+
+
+<div class="modal-header">
+
+<h2>Edit Product</h2>
+
+<button
+class="close"
+onclick="closeEditModal()">
+
+&times;
+
+</button>
+
+</div>
+
+
+<form id="editProductForm">
+
+
+<input
+type="hidden"
+id="editId">
+
+
+<div class="form-grid">
+
+
+<div class="form-group">
+
+<label>Product Name</label>
+
+<input
+type="text"
+id="editName"
+required>
+
+</div>
+
+
+<div class="form-group">
+
+<label>Category</label>
+
+<select id="editCategory">
+
+<option>Computer</option>
+<option>Laptop</option>
+<option>Accessories</option>
+<option>Keyboard</option>
+<option>Mouse</option>
+<option>Monitor</option>
+<option>Storage</option>
+<option>Networking</option>
+<option>Other</option>
+
+</select>
+
+</div>
+
+
+<div class="form-group">
+
+<label>Price</label>
+
+<input
+type="number"
+id="editPrice"
+required>
+
+</div>
+
+
+<div class="form-group">
+
+<label>Stock</label>
+
+<input
+type="number"
+id="editQuantity"
+required>
+
+</div>
+
+
+<div class="form-group">
+
+<label>Reorder Level</label>
+
+<input
+type="number"
+id="editReorder"
+required>
+
+</div>
+
+
+<div class="form-group">
+
+<label>Supplier</label>
+
+<input
+type="text"
+id="editSupplier">
+
+</div>
+
+
+<div class="form-group full">
+
+<label>Description</label>
+
+<textarea
+id="editDescription"
+rows="3"></textarea>
+
+</div>
+
+
+</div>
+
+
+<div class="form-actions">
+
+
+<button
+type="button"
+class="secondary"
+onclick="closeEditModal()">
+
+Cancel
+
+</button>
+
+
+<button
+type="submit"
+class="primary">
+
+Save Changes
+
+</button>
+
+
+</div>
+
+</form>
+
+</div>
+
+</div>
+
+
+
+<div
+id="toast"
+class="toast">
+
+<i class="fa-solid fa-circle-check"></i>
+
+<span id="toastMessage">
+Success
+</span>
+
+</div>
+
+
+<iframe
+name="hiddenFrame"
+style="display:none;">
+</iframe>
+
+
+<script src="script.js"></script>
+
+</body>
+
+</html>
